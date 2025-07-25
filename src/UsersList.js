@@ -7,7 +7,7 @@ export default function UsersList() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/users")
+    fetch("https://starlit-scone-2eb360.netlify.app//users")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch users");
         return res.json();

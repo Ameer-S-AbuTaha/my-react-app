@@ -11,7 +11,7 @@ export default function SuccessView() {
     if (!userId) return;
 
     const fetchUser = () => {
-      fetch(`http://127.0.0.1:5000/users/${userId}`)
+      fetch(`https://starlit-scone-2eb360.netlify.app/users/${userId}`)
         .then((response) => {
           if (!response.ok) {
             throw new Error("User not found");
