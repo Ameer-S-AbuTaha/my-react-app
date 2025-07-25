@@ -2,6 +2,7 @@
   "name": "my-react-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ameer-94.netlify.app",
   "dependencies": {
     "cors": "^2.8.5",
     "cra-template": "1.2.0",
