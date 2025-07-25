@@ -13,7 +13,7 @@ export default function LoginPage() {
     setLoginError("");
 
     try {
-      const res = await fetch("https://starlit-scone-2eb360.netlify.app//login", {
+      const res = await fetch("https://ameer-94.netlify.app/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

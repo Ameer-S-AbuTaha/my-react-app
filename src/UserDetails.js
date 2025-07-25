@@ -49,7 +49,7 @@ function UserDetails() {
   const handleActivate = () => {
     setLoadingAction(true);
     setActionError('');
-    fetch(`https://starlit-scone-2eb360.netlify.app/users/${id}/activate`, {
+    fetch(`https://ameer-94.netlify.app/users/${id}/activate`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
