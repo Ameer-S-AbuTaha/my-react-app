@@ -49,7 +49,7 @@ function UserDetails() {
   const handleActivate = () => {
     setLoadingAction(true);
     setActionError('');
-    fetch(`https://ameer-94.netlify.app/users/${id}/activate`, {
+    fetch(`http://127.0.0.1:5000/users/${id}/activate`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
