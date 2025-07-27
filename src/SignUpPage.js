@@ -1,103 +1,58 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
+import "./App.css"; // Reuse your existing styles
 
 export default function SignUpPage() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [signUpError, setSignUpError] = useState("");
+  const [form, setForm] = useState({
+    first_name: "",
+    lastname: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const navigate = useNavigate();
 
-  const handleSignUp = async (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSignUpError("");
+    setError("");
+    setSuccess("");
 
     try {
-      const res = await fetch("http://127.0.0.1:5000/signup", {
+      const response = await fetch("http://127.0.0.1:5000/users", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          email,
-          password,
-        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Sign up failed");
+      if (response.ok) {
+        const data = await response.json();
+        setSuccess("Sign up successful!");
+        setTimeout(() => navigate("/"), 1000); // Redirect to login
+      } else {
+        const errData = await response.json();
+        setError(errData.message || "Sign up failed");
       }
-
-      const data = await res.json();
-      const userId = data.user.id;
-      navigate("/success", { state: { userId } });
     } catch (err) {
-      setSignUpError(err.message);
+      setError("Server error");
     }
   };
 
   return (
-    <div className="container">
+    <div className="login-container">
       <div className="left-panel">
         <h2>Sign Up</h2>
-        <p>Create your account below</p>
-
-        <form onSubmit={handleSignUp}>
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="First Name"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <input
-              type="text"
-              placeholder="Last Name"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          {signUpError && <p className="error">{signUpError}</p>}
-
-          <button type="submit">Sign Up</button>
-        </form>
-      </div>
-
-      <div className="right-panel">
-        <div className="overlay-ui">
-          <h4>Welcome to Team Review</h4>
-          <p>Register now and be part of the conversation.</p>
-        </div>
-      </div>
-    </div>
-  );
-}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="first_name"
+            placeholder="First Name"
+            value={form.first
