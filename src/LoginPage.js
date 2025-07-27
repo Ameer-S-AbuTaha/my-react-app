@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./App.css"; // Make sure the path matches your project structure
+import "./App.css";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -63,6 +63,13 @@ export default function LoginPage() {
           <button type="submit">Login</button>
         </form>
 
+        <div className="social-login">
+          <button type="button">Google</button>
+          <button type="button">Apple</button>
+        </div>
+
+        <hr className="separator" />
+
         <button
           className="signup-button"
           type="button"
@@ -70,11 +77,6 @@ export default function LoginPage() {
         >
           Sign Up
         </button>
-
-        <div className="social-login">
-          <button type="button">Google</button>
-          <button type="button">Apple</button>
-        </div>
       </div>
 
       <div className="right-panel">
