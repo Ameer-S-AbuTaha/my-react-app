@@ -63,6 +63,14 @@ export default function LoginPage() {
           <button type="submit">Login</button>
         </form>
 
+        <button
+          className="signup-button"
+          type="button"
+          onClick={() => navigate("/signup")}
+        >
+          Sign Up
+        </button>
+
         <div className="social-login">
           <button type="button">Google</button>
           <button type="button">Apple</button>
