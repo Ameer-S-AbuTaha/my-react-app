@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./App.css";
 
 export default function SignUpPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signUpError, setSignUpError] = useState("");
   const navigate = useNavigate();
+
+  // Update username when firstName changes
+  useEffect(() => {
+    if (firstName) {
+      setUsername(firstName.toLowerCase());
+    } else {
+      setUsername("");
+    }
+  }, [firstName]);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -21,6 +31,7 @@ export default function SignUpPage() {
         body: JSON.stringify({
           first_name: firstName,
           last_name: lastName,
+          username,
           email,
           password,
         }),
@@ -32,7 +43,7 @@ export default function SignUpPage() {
       }
 
       const data = await res.json();
-      const userId = data.user.id;
+      const userId = data.id;  // Adjusted as your backend returns id here
       navigate("/success", { state: { userId } });
     } catch (err) {
       setSignUpError(err.message);
@@ -62,6 +73,16 @@ export default function SignUpPage() {
               placeholder="Last Name"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
